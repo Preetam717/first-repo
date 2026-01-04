@@ -6,15 +6,15 @@ const dotenv = require("dotenv");
 module.exports = (env, argv) => {
   const mode = argv.mode || "development";
 
-  // Load correct env file
+  // Load local env file (if exists)
   const envFile = `.env.${mode}`;
-  const envConfig = dotenv.config({ path: envFile }).parsed || {};
+  const localEnv = dotenv.config({ path: envFile }).parsed || {};
 
-  // Convert env vars for DefinePlugin
-  const envKeys = {
-  "process.env": JSON.stringify(envConfig),
-};
-
+  // Merge Netlify env + local env
+  const finalEnv = {
+    ...process.env,
+    ...localEnv,
+  };
 
   return {
     mode,
@@ -68,7 +68,9 @@ module.exports = (env, argv) => {
         template: "./public/index.html",
         filename: "index.html",
       }),
-      new webpack.DefinePlugin(envKeys), // 👈 inject env vars
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(finalEnv),
+      }),
     ],
 
     devServer: {
@@ -76,6 +78,7 @@ module.exports = (env, argv) => {
         directory: path.join(__dirname, "public"),
       },
       port: 3000,
+      hot: true,
       open: true,
       hot: true,
     },
