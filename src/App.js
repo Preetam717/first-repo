@@ -18,6 +18,7 @@ const App = () => {
   //   </div>
   // );
   const cartItems = useSelector((state) => state.cart.items);
+  console.log("ENV:", process.env);
 
   return (
     <div>
