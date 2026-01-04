@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
@@ -21,7 +22,7 @@ module.exports = (env, argv) => {
     entry: "./src/index.js",
 
     resolve: {
-      extensions: [".js", ".jsx"]
+      extensions: [".js", ".jsx"],
     },
 
     output: {
@@ -63,6 +64,10 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
+      new HtmlWebpackPlugin({
+        template: "./public/index.html",
+        filename: "index.html",
+      }),
       new webpack.DefinePlugin(envKeys), // 👈 inject env vars
     ],
 
