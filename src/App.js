@@ -29,6 +29,7 @@ const App = () => {
         }}
       >
         <h1>Product Store</h1>
+        <p>Environment: {process.env.REACT_APP_ENV}</p>
         <div>Cart: {cartItems.length} items</div>
       </header>
       <Products />
