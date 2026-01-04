@@ -11,10 +11,10 @@ module.exports = (env, argv) => {
   const envConfig = dotenv.config({ path: envFile }).parsed || {};
 
   // Convert env vars for DefinePlugin
-  const envKeys = Object.keys(envConfig).reduce((acc, key) => {
-    acc[`process.env.${key}`] = JSON.stringify(envConfig[key]);
-    return acc;
-  }, {});
+  const envKeys = {
+  "process.env": JSON.stringify(envConfig),
+};
+
 
   return {
     mode,
