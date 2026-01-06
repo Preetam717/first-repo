@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Products from "./components/Products";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import Home from "./pages/home";
+import Products from "./pages/products";
+import Weather from "./pages/weather";
+import Navbar from "./components/NavBar";
 
 import "./App.scss";
 
@@ -18,7 +23,6 @@ const App = () => {
   //   </div>
   // );
   const cartItems = useSelector((state) => state.cart.items);
-  console.log("ENV:", process.env);
 
   return (
     <div>
@@ -33,7 +37,14 @@ const App = () => {
         <p>Environment: {process.env.REACT_APP_ENV}</p>
         <div>Cart: {cartItems.length} items</div>
       </header>
-      <Products />
+      {/* <Products /> */}
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/weather" element={<Weather />} />
+      </Routes>
     </div>
   );
 };

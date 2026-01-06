@@ -80,7 +80,6 @@ module.exports = (env, argv) => {
       port: 3000,
       hot: true,
       open: true,
-      hot: true,
     },
   };
 };

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import ProductCard from "./ProductCard";
-import { addToCart } from "../store/cartSlice";
+import { addToCart } from "../../store/cartSlice";
 
-import "../styles/Products.scss";
+import "../../styles/Products.scss";
 
 const PRODUCTS_PER_PAGE = 20;
 
