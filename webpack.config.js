@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
@@ -68,6 +69,16 @@ module.exports = (env, argv) => {
         template: "./public/index.html",
         filename: "index.html",
       }),
+
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, "public/_redirects"),
+            to: "_redirects",
+          },
+        ],
+      }),
+
       new webpack.DefinePlugin({
         "process.env": JSON.stringify(finalEnv),
       }),
