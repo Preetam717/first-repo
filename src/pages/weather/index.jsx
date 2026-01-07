@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Weather = () => {
   const [query, setQuery] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
+  useEffect(() => {
+    if (searchValue.length > 2) {
+      handleSearch();
+    }
+  }, [searchValue]);
+
   // Called ONLY when clicking Search button
-  const fetchSuggestions = async () => {
-    if (query.trim().length < 1) return;
+  const handleSearch = async () => {
 
     try {
       const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/find?q=${query}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/find?q=${searchValue}&appid=${API_KEY}&units=metric`
       );
       const data = await res.json();
 
@@ -58,8 +64,8 @@ const Weather = () => {
       {/* Search Input */}
       <input
         type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={searchValue}
+        onChange={(e)=> setSearchValue(e.target.value)}
         placeholder="Enter city name"
         style={{
           width: "100%",
@@ -67,11 +73,11 @@ const Weather = () => {
           fontSize: "16px",
           borderRadius: "5px",
           border: "1px solid #ccc",
-        }}
+        }}  
       />
 
       {/* Search Button */}
-      <button
+      {/* <button
         onClick={fetchSuggestions}
         style={{
           marginTop: "10px",
@@ -85,7 +91,7 @@ const Weather = () => {
         }}
       >
         Search
-      </button>
+      </button> */}
 
       {/* Suggestions */}
       {suggestions.length > 0 && (
