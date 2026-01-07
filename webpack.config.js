@@ -73,8 +73,9 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: path.resolve(__dirname, "public/_redirects"),
-            to: "_redirects",
+            from: "public/_redirects",
+            to: "",
+            noErrorOnMissing: true,
           },
         ],
       }),
@@ -88,6 +89,8 @@ module.exports = (env, argv) => {
       static: {
         directory: path.join(__dirname, "public"),
       },
+
+      historyApiFallback: true,
       port: 3000,
       hot: true,
       open: true,
